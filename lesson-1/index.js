@@ -17,7 +17,7 @@ console.log(showAge(person));
 // console.log(__dirname);
 
 console.log(process.argv);
-// node index test
+// >> node index test
 // 0 - node application file path
 // 1 - executable file path
 // 2 - arguments "example - test"
