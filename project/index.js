@@ -1,7 +1,7 @@
 const yargs = require('yargs');
 const pkg = require('./package.json');
-const { addNote, printNotes } = require('./notes.controller.js');
-// const chalk = require('chalk');
+const { addNote, printNotes, removeNote } = require('./notes.controller.js');
+const chalk = require('chalk');
 
 // yargs.version("1.0.0"); // the same as the code below
 yargs.version(pkg.version);
@@ -16,9 +16,8 @@ yargs.command({
 			demandOption: true,
 		},
 	},
-	handler({ title }) {
-		addNote(title);
-		console.log('Add new note: ', title);
+	async handler({ title }) {
+		await addNote(title);
 	},
 	// handler: function(options) {
 	// 	const { title } = options;
@@ -31,6 +30,14 @@ yargs.command({
 	describe: 'Print all notes',
 	async handler() {
 		await printNotes();
+	},
+});
+
+yargs.command({
+	command: 'remove',
+	describe: 'Remove note by id',
+	async handler({ id }) {
+		await removeNote(id);
 	},
 });
 

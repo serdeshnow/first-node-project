@@ -15,7 +15,7 @@ async function addNote(title) {
 	notes.push(note);
 
 	await fs.writeFile(notesPath, JSON.stringify(notes))
-	console.log(chalk.green('New note has been added!'));
+	console.log(chalk.green(`New note with title "${title}" has been added!`));
 }
 
 
@@ -27,14 +27,21 @@ async function getNotes() {
 
 async function printNotes() {
 	const notes = await getNotes();
-	console.log(chalk.blueBright.underline('Notes list:'), chalk.blueBright.bold(`[`));
+	console.log(chalk.blueBright.underline('Notes list:'));
 	notes.forEach(note => {
-		console.log(chalk.blueBright.bold(`${note.title},`));
+		console.log(chalk.blueBright.bold(`${note.id} ${note.title}`));
 	})
-	console.log(chalk.blueBright.bold(`]`));
+}
+
+async function removeNote(id) {
+	const notes = await getNotes();
+	const filteredNotes = notes.filter(note => note.id !== String(id));
+	await fs.writeFile(notesPath, JSON.stringify(filteredNotes), {encoding:'utf8',flag:'w'})
+	console.log(chalk.green('removed note(s) with ID:', id));
 }
 
 module.exports = {
 	addNote,
-	printNotes
+	printNotes,
+	removeNote,
 }
