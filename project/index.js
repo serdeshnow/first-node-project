@@ -1,46 +1,31 @@
-const yargs = require('yargs');
-const pkg = require('./package.json');
-const { addNote, printNotes, removeNote } = require('./notes.controller.js');
+const http = require('http');
 const chalk = require('chalk');
+const fs = require('fs/promises');
+const path = require('path');
 
-// yargs.version("1.0.0"); // the same as the code below
-yargs.version(pkg.version);
+const basePath = path.join(__dirname, 'pages')
 
-yargs.command({
-	command: 'add',
-	describe: 'Add new note to list',
-	builder: {
-		title: {
-			type: 'string',
-			describe: 'Note title',
-			demandOption: true,
-		},
-	},
-	async handler({ title }) {
-		await addNote(title);
-	},
-	// handler: function(options) {
-	// 	const { title } = options;
-	// 	console.log('Add new note', title);
-	// },
-});
+const PORT = 3000;
 
-yargs.command({
-	command: 'list',
-	describe: 'Print all notes',
-	async handler() {
-		await printNotes();
-	},
-});
+const server = http.createServer(async(req, res) => {
+	console.log(chalk.blueBright('Server is running'));
+	// console.log(chalk.blueBright('Request object:\n\r'), req); // All info about request
+	console.log(chalk.blueBright('Request method:\n\r'), req.method); // request method
+	console.log(chalk.blueBright('Request url:\n\r'), req.url); // requset url
+	
+	if (req.method === 'GET') {
+		const content = await fs.readFile(path.join(basePath, 'index.html'))
+		// res.setHeader('Content-Type', 'text/html'); // response content type (analogue)
+		res.writeHead(200, {
+			'Content-Type': 'text/html; charset=utf-8',
+		}); // response status code
+		res.end(content); //
+	}
+	
+})
 
-yargs.command({
-	command: 'remove',
-	describe: 'Remove note by id',
-	async handler({ id }) {
-		await removeNote(id);
-	},
-});
-
-yargs.parse();
-
-// console.log(chalk.bgGray("index.js worked"))
+server.listen(PORT, () => {
+	console.log(chalk.greenBright(`Server started on port ${PORT}`));
+	console.log(chalk.greenBright(`\n>> http://localhost:${PORT}\n\r`));
+	console.log(chalk.greenBright(`To terminate process, press ctrl + C\n`));
+}) ;

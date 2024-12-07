@@ -22,4 +22,4 @@ console.log(process.argv);
 // 1 - executable file path
 // 2 - arguments "example - test"
 
-// creating new project with ">> npm init"
+// creating new project-lesson-2 with ">> npm init"
