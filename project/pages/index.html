@@ -8,9 +8,16 @@
 <body>
 	<div class="container">
 		<h3>Node server app</h3>
-		<form action="/" method="post">
+
+		<form action="/" method="post" class="mb-2">
 			<div class="form-floating mb-3">
-				<input type="email" class="form-control" id="floatingInput" placeholder="type your note...">
+				<input type="text"
+				       class="form-control"
+				       id="floatingInput"
+				       name="title"
+				       required
+				       placeholder="type your note..."/>
+				<!--name="title" !! IMPORTANT !!-->
 				<label for="floatingInput">Note title</label>
 			</div>
 			<button class="btn btn-primary" type="submit">Send</button>
