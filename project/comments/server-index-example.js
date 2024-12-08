@@ -15,7 +15,7 @@
 // 	// console.log(chalk.blueBright('Request url:\n\r'), req.url); // requset url
 //
 // 	if (req.method === 'GET') {
-// 		const content = await fs.readFile(path.join(basePath, 'index.html'))
+// 		const content = await fs.readFile(path.join(basePath, 'index.ejs'))
 // 		// res.setHeader('Content-Type', 'text/html'); // response content type (analogue)
 // 		res.writeHead(200, {
 // 			'Content-Type': 'text/html; charset=utf-8',
